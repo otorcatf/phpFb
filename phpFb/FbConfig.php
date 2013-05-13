@@ -16,7 +16,7 @@ class FBconfig {
      * @return the App namespace
      */
     public static function getNameSpace() {
-        return ('fbzumbs');
+        return ('phpf-test');
     }
 	/**
      * @return the scope (Permissions needed for your app)
@@ -30,17 +30,17 @@ class FBconfig {
      * @return the URL of the server where the app is hosted
      */
     public static function getServerURL(){
-        return ('http://fbsecurized.com/app/phpFacebook');
+        return ('http://fbsecurized.com/app/phpfbtest');
     }
 	/**
      * @return the App URL
      */
     public static function getTabURL () {
-        return ('http://fbsecurized.com/app/phpFacebook');
+        return ('http://fbsecurized.com/app/phpfbtest');
     }
 	
     public static function pageID(){
-        return('');
+        return('184808704889583');
     }    
 }
 ?>
