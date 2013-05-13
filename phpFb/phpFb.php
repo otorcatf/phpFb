@@ -63,12 +63,14 @@ class phpFb extends Facebook{
 		}
     }
 
-    public function tabRedirect($redirect = 0){
+    public function tabRedirect($redirect = true){
         $signedRequest = $this->getSignedRequest();
         if (!$signedRequest || empty($signedRequest["page"])){
             $protocol = $_SERVER['HTTPS'] ? "https://" : "http://";
-            $pageInfo = $this->api("/".FBconfig::pageID());
-            $redirectURL = $pageInfo["link"] . "?sk=app_" . $this->app_id;
+            $redirectURL = $protocol . 'www.facebook.com/' . FBconfig::pageID() . "?sk=app_" . FBconfig::appID();
+            if (isset($_GET['code']) && $_GET['code']){
+                $redirectURL .= '&app_data='.urlencode(json_encode(array('auth' => 1)));
+            }
             if (!$redirect)
                 return ($redirectURL);
             else{
@@ -78,11 +80,14 @@ class phpFb extends Facebook{
         }
     }
 
-    public function canvasRedirect($redirect = false){
+    public function canvasRedirect($redirect = true){
         $signedRequest = $this->getSignedRequest();
         if (!$signedRequest || !empty($signedRequest["page"])){
             $protocol = $_SERVER['HTTPS'] ? "https://" : "http://";
             $redirectURL = $protocol . "apps.facebook.com/" . FBconfig::getNameSpace();
+            if (isset($_GET['code']) && $_GET['code']){
+                $redirectURL .= '?auth=1';
+            }
             if (!$redirect)
                 return ($redirectURL);
             else{
@@ -90,6 +95,16 @@ class phpFb extends Facebook{
                 exit();
             }
         }
+    }
+
+    function getAppData(){
+        $signed_request = $this->getSignedRequest();
+        if ($signed_request['app_data']){
+            return ((array)json_decode($signed_request['app_data']));
+        }else{
+            return null;
+        }
+
     }
 
     public function getUserData($id = ''){
