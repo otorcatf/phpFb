@@ -1,8 +1,8 @@
 <?php
-require '../phpFb/phpFb.php';
+require 'phpFb/phpFb.php';
 $phpFb = new phpFb();
 $phpFb->loadFb();
-$phpFb->canvasRedirect();
+$phpFb->tabRedirect();
 $naitik = $phpFb->getUserData('naitik');
 ?>
 <!doctype html>
@@ -27,6 +27,9 @@ $naitik = $phpFb->getUserData('naitik');
 
 <h3>PHP Session</h3>
 <pre><?php print_r($_SESSION); ?></pre>
+
+<h3>app_data</h3>
+<pre><?php print_r($phpFb->getAppData()); ?></pre>
 
 <?php if ($phpFb->user_profile): ?>
     <h3>You</h3>
