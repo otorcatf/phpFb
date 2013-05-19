@@ -55,7 +55,7 @@ class phpFb extends Facebook{
 			$buttonURL = $this->getLoginUrl($params);			
 		}
 		
-		if ($redirect && !$this->user_profile){			
+		if ($redirect && !$this->user_profile && !isset($_REQUEST['error'])){
 			echo "<script type='text/javascript'>top.location.href = '$buttonURL';</script>";
 			exit();
 		}else{
@@ -82,7 +82,7 @@ class phpFb extends Facebook{
 
     public function canvasRedirect($redirect = true){
         $signedRequest = $this->getSignedRequest();
-        if (!$signedRequest || !empty($signedRequest["page"])){
+        if (!$signedRequest || empty($signedRequest)){
             $protocol = $_SERVER['HTTPS'] ? "https://" : "http://";
             $redirectURL = $protocol . "apps.facebook.com/" . FBconfig::getNameSpace();
             if (isset($_GET['code']) && $_GET['code']){
